@@ -61,7 +61,7 @@
   </style>
 </head>
 <body>
-    <button id="docx" onclick="doc()">Documentry!</button>
+    <button id="docx" onclick="doc()" type="button">Documentry!</button>
     <!-- SECTION DESCRIPTION -->
 <section class="panel-description">
     <h1>Selamat Datang di CyberSecurity Panel Execution</h1>
@@ -89,7 +89,7 @@
   <p>commands: <code>ping</code>, <code>echo</code>, <code>date</code>, <code>whoami</code>, <code>uptime</code>, <code>curl</code>, dll</p>
   <form id="cmdForm">
     <input type="text" name="command" placeholder="Enter command" required />
-    <button type="submit">Run</button>
+    <button type="button">Run</button>
     <button type="button" id="clearBtn" style="background: #f00; color: #fff;">Clear</button>
   </form>
   <pre id="output"></pre>
@@ -108,7 +108,7 @@
 <script>
 const fileOutput = document.getElementById('fileOutput');
 
-fileForm.addEventListener('submit', async e => {
+fileForm.addEventListener('click', async e => {
   e.preventDefault();
   fileOutput.textContent = 'Membuat file...';
 
