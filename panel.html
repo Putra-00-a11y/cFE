@@ -61,83 +61,63 @@
   </style>
 </head>
 <body>
-    <button id="docx" onclick="doc()" type="button">Documentry!</button>
-    <!-- SECTION DESCRIPTION -->
-<section class="panel-description">
+  <button id="docx" type="button">Documentry!</button>
+
+  <!-- SECTION DESCRIPTION -->
+  <section class="panel-description">
     <h1>Selamat Datang di CyberSecurity Panel Execution</h1>
     <p>
       Panel ini dirancang sebagai pusat kendali eksekusi berbagai perintah strategis yang dapat dijalankan langsung dari sisi server.
-      Dengan sistem keamanan berlapis dan eksekusi real-time, pengguna dapat melakukan simulasi, eksplorasi, hingga tindakan nyata
-      melalui interface yang minimalis namun powerful ini.
     </p>
     <p>
-      Setiap fitur pada panel ini dibatasi secara ketat melalui sistem whitelist command, yang memastikan bahwa hanya perintah yang
-      telah disetujui yang dapat dijalankan. Dengan demikian, panel ini tidak hanya fleksibel, namun juga aman digunakan oleh pengguna
-      terotorisasi.
+      Setiap fitur pada panel ini dibatasi secara ketat melalui sistem whitelist command...
     </p>
     <p>
-      Di sini, kamu bisa menjalankan instruksi sederhana seperti <code>ping</code>, <code>curl</code>, <code>uptime</code>, hingga
-      perintah yang lebih kompleks sesuai dengan pengembangan lebih lanjut. Panel ini akan terus dikembangkan, dan dirancang khusus
-      sebagai alat eksplorasi sistem backend yang stabil, cepat, dan efisien.
+      Di sini, kamu bisa menjalankan instruksi sederhana seperti <code>ping</code>, <code>curl</code>, <code>uptime</code>, dll.
     </p>
     <p>
-      Gunakan panel ini dengan bijak. Ingat, setiap perintah membawa akibat. Pastikan kamu tahu apa yang kamu jalankan.
+      Gunakan panel ini dengan bijak. Ingat, setiap perintah membawa akibat.
     </p>
   </section>
 
   <h1>Command Executor:</h1>
   <p>commands: <code>ping</code>, <code>echo</code>, <code>date</code>, <code>whoami</code>, <code>uptime</code>, <code>curl</code>, dll</p>
+
   <form id="cmdForm">
     <input type="text" name="command" placeholder="Enter command" required />
-    <button type="button">Run</button>
+    <button type="submit">Run</button>
     <button type="button" id="clearBtn" style="background: #f00; color: #fff;">Clear</button>
   </form>
   <pre id="output"></pre>
 
   <h2>Buat File Baru:</h2>
-<form id="fileForm">
-  <input type="text" name="filename" placeholder="Nama file (contoh: script.js)" required />
-  <button type="submit">Buat File</button>
-  <button type="button" id="clearBtN" style="background: #f00; color: #fff;">Clear</button>
-  <br /><br />
-  <textarea name="content" rows="8" style="width: 100%;" placeholder="Isi file..."></textarea>
-  <br />
-</form>
-<pre id="fileOutput"></pre>
+  <form id="fileForm">
+    <input type="text" name="filename" placeholder="Nama file (contoh: script.js)" required />
+    <button type="submit">Buat File</button>
+    <button type="button" id="clearBtN" style="background: #f00; color: #fff;">Clear</button>
+    <br /><br />
+    <textarea name="content" rows="8" style="width: 100%;" placeholder="Isi file..."></textarea>
+    <br />
+  </form>
+  <pre id="fileOutput"></pre>
 
-<script>
-const fileOutput = document.getElementById('fileOutput');
+  <script>
+    const cmdForm = document.getElementById('cmdForm');
+    const fileForm = document.getElementById('fileForm');
+    const output = document.getElementById('output');
+    const fileOutput = document.getElementById('fileOutput');
+    const clearBtn = document.getElementById('clearBtn');
+    const clearBtN = document.getElementById('clearBtN');
+    const docx = document.getElementById('docx');
 
-fileForm.addEventListener('click', async (e) => {
-  e.preventDefault();
-  fileOutput.textContent = 'Membuat file...';
-
-  const formData = new FormData(fileForm);
-  const filename = formData.get('filename');
-  const content = formData.get('content');
-
-  try {
-    const res = await fetch('https://ccbec-production.up.railway.app/create-file', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ filename, content }),
-    });
-    const result = await res.text();
-    fileOutput.textContent = result;
-  } catch (err) {
-    fileOutput.textContent = 'Gagal terhubung ke server.';
-  }
-});
-  
-    form.addEventListener('click', async e => {
+    // Eksekusi command
+    cmdForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-  
-      const formData = new FormData(form);
+      const formData = new FormData(cmdForm);
       const command = formData.get('command');
-  
       const runningMsg = `> ${command}\n[Running...]\n`;
       output.textContent += runningMsg;
-  
+
       try {
         const res = await fetch('https://ccbec-production.up.railway.app/execute', {
           method: 'POST',
@@ -151,23 +131,46 @@ fileForm.addEventListener('click', async (e) => {
         output.textContent += '[Error connecting to server]\n\n';
         output.scrollTop = output.scrollHeight;
       }
-  
-      form.reset();
+
+      cmdForm.reset();
     });
-  
+
+    // Clear output command
     clearBtn.addEventListener('click', () => {
       output.textContent = '';
     });
 
-    clearBtN.addEventListener('click', () => {
-        fileOutput.textContent = '';
-    })
+    // Buat file baru
+    fileForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      fileOutput.textContent = 'Membuat file...';
 
-    const idx = document.getElementById('docx');
+      const formData = new FormData(fileForm);
+      const filename = formData.get('filename');
+      const content = formData.get('content');
+
+      try {
+        const res = await fetch('https://ccbec-production.up.railway.app/create-file', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename, content }),
+        });
+        const result = await res.text();
+        fileOutput.textContent = result;
+      } catch (err) {
+        fileOutput.textContent = 'Gagal terhubung ke server.';
+      }
+    });
+
+    // Clear file output
+    clearBtN.addEventListener('click', () => {
+      fileOutput.textContent = '';
+    });
+
+    // Redirect ke docx.html
     docx.addEventListener('click', () => {
-        window.location.href = 'docx.html';
+      window.location.href = 'docx.html';
     });
   </script>
-  
 </body>
 </html>
