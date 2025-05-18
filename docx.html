@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>V-Pendulum - Documentation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #111;
+      color: #eee;
+      padding: 2rem;
+    }
+    .doc-section {
+      margin-bottom: 2rem;
+    }
+    .doc-section h3 {
+      color: #00ffc3;
+    }
+    code {
+      background-color: #222;
+      color: #0f0;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    pre {
+      background-color: #222;
+      padding: 1rem;
+      border-radius: 6px;
+      color: #0f0;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #00ff9c;
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #00cc7a;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="mb-4">📄 Dokumentasi V-Pendulum</h1>
+
+  <div class="doc-section">
+    <h3>🔹 Struktur HTML Umum</h3>
+    <p>File HTML di V-Pendulum memiliki struktur dasar dengan elemen-elemen berikut:</p>
+    <ul>
+      <li><code>&lt;nav&gt;</code>: Untuk navbar utama</li>
+      <li><code>&lt;main&gt;</code>: Area konten utama</li>
+      <li><code>&lt;footer&gt;</code>: Untuk bagian bawah halaman</li>
+    </ul>
+  </div>
+
+  <div class="doc-section">
+    <h3>🔹 Penyimpanan Data</h3>
+    <p>Semua data dari form seperti username, gender, nomor WA disimpan menggunakan <code>localStorage</code>.</p>
+    <pre><code>localStorage.setItem("username", username);
+localStorage.getItem("username");</code></pre>
+  </div>
+
+  <div class="doc-section">
+    <h3>🔹 Struktur Tools</h3>
+    <p>Setiap tool memiliki atribut seperti nama, deskripsi, tingkat tool, efek, harga, rating, dll. Ditampilkan dalam bentuk tabel responsive.</p>
+  </div>
+
+  <div class="doc-section">
+    <h3>🔹 Backend Lokal</h3>
+    <p>Semua data pemesanan dikirim ke file JSON via server Node.js lokal dengan endpoint custom.</p>
+  </div>
+
+  <div class="doc-section">
+    <h3>🔹 Web Push Notification</h3>
+    <p>Fitur ini memungkinkan pengiriman notifikasi ke device publik dari dashboard admin.</p>
+  </div>
+
+  <div class="doc-section">
+    <h3>🔹 Lain-lain</h3>
+    <ul>
+      <li>QR Code redirect berbasis <code>noPemesanan</code></li>
+      <li>Halaman <code>form1.html</code> untuk pemesanan tool WA</li>
+      <li>Validasi input pada dashboard dan tombol kritis</li>
+      <li>Halaman <code>feedbacks</code> untuk input dan menampilkan feedback user</li>
+    </ul>
+  </div>
+
+  <br>
+  <br>
+  <h1 class="mb-4">📄 Dokumentasi Panel Admin</h1>
+
+  <div class="doc-section">
+    <h3>🔹 Command Terminal (Kali Module)</h3>
+    <p>Untuk command ada : <ul>
+        <li>(JIKA BINGUNG ketik -h setelah command, contoh = nmap -h)</li>
+        <li>nmap -h</li>
+        <li>npm -h</li>
+        <li>ssh</li>
+        <li>php</li>
+        <li>python</li>
+        <li>bash</li>
+        <li>sudo</li>
+        <li>screenfetch</li>
+        <li>crontab</li>
+        <li>uname</li>
+        <li>w</li>
+        <li>find</li>
+        <li>du</li>
+        <li>lsof</li>
+        <li>netstat</li>
+        <li>node</li>
+        <li>touch</li>
+        <li>hostname</li>
+        <li>df</li>
+        <li>free</li>
+        <li>mkdir</li>
+        <li>ls</li>
+        <li>echo</li>
+        <li>date</li>
+        <li>uptime</li>
+        <li>curl</li>
+        <li>whomai</li>
+        <li>cat</li>
+        <li>ssh</li>
+        <li>clear</li>
+        <li>nano</li>
+        <li>dll</li>
+    </ul></p>
+  </div>
+
+  <div class="doc-section">
+    <h3>🔹 Contoh Command</h3>
+    <p>Berikut contoh" eksekusi : <ul>
+        <li>nmap (localhost)</li>
+        <li>find -c 3 google.com (melihat IP, net, jaringan dari suatu situs)</li>
+        <li>cat s/server.js (melihat aksesori file js)</li>
+        <li>node (file) == (melakukan running suatu file)</li>
+        <li>screenfetch (melihat detile OS)</li>
+        <li>ls (menampilkan list file)</li>
+    </ul></p>
+  </div>
+
+  <div class="doc-section">
+    <h3>🔹Contoh Exec Tool</h3>
+    <p>COntoh melakukan suatu tindakan Cyber : <ul>
+        <li>node s/output/sWA.js (Gunakan tool ini sebagai pentesting suatu kerentanan di device WA)</li>
+        <li>curl https://ipapi.co/(IP localhost/target)/json/ (Gunakan untuk melihat seputar informasi dari IP target/localhost)</li>
+    </ul></p>
+  </div>
+  <button id="codx" onclick="codxx()">BACK</button>
+
+  <footer class="mt-5 text-center">
+    <hr />
+    <p>V-Pendulum Docs &copy; 2025</p>
+  </footer>
+  
+
+  <script>
+        const codB = document.getElementById("codx");
+
+        function codxx() {
+            window.location.href = "panel.html";
+        }
+  </script>
+</body>
+</html>

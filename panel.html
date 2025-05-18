@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Safe Command Executor</title>
+  <link rel="icon" type="image/x-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQahb-kUMUnLJpfBkowofEU7eU91sZGNFPpSw&s">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm/css/xterm.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
+  <style>
+    body {
+      background: #111;
+      color: #0f0;
+      font-family: monospace;
+      padding: 20px;
+    }
+    input, button {
+      font-family: monospace;
+      font-size: 16px;
+    }
+    input {
+      width: 80%;
+      padding: 8px;
+      margin-right: 8px;
+      background: #222;
+      color: #0f0;
+      border: none;
+      border-radius: 4px;
+      outline: none;
+    }
+    button {
+      padding: 8px 16px;
+      background: #0f0;
+      border: none;
+      cursor: pointer;
+      color: #000;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+    pre {
+      background: #222;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 20px;
+      white-space: pre-wrap;
+    }
+
+    textarea {
+        background-color: #222;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        color: white;
+        font-family: 'Segoe UI';
+        font-size: .8rem;
+    }
+
+    div {
+        height: 650px;
+    }
+  </style>
+</head>
+<body>
+    <button id="docx" onclick="doc()">Documentry!</button>
+    <!-- SECTION DESCRIPTION -->
+<section class="panel-description">
+    <h1>Selamat Datang di CyberSecurity Panel Execution</h1>
+    <p>
+      Panel ini dirancang sebagai pusat kendali eksekusi berbagai perintah strategis yang dapat dijalankan langsung dari sisi server.
+      Dengan sistem keamanan berlapis dan eksekusi real-time, pengguna dapat melakukan simulasi, eksplorasi, hingga tindakan nyata
+      melalui interface yang minimalis namun powerful ini.
+    </p>
+    <p>
+      Setiap fitur pada panel ini dibatasi secara ketat melalui sistem whitelist command, yang memastikan bahwa hanya perintah yang
+      telah disetujui yang dapat dijalankan. Dengan demikian, panel ini tidak hanya fleksibel, namun juga aman digunakan oleh pengguna
+      terotorisasi.
+    </p>
+    <p>
+      Di sini, kamu bisa menjalankan instruksi sederhana seperti <code>ping</code>, <code>curl</code>, <code>uptime</code>, hingga
+      perintah yang lebih kompleks sesuai dengan pengembangan lebih lanjut. Panel ini akan terus dikembangkan, dan dirancang khusus
+      sebagai alat eksplorasi sistem backend yang stabil, cepat, dan efisien.
+    </p>
+    <p>
+      Gunakan panel ini dengan bijak. Ingat, setiap perintah membawa akibat. Pastikan kamu tahu apa yang kamu jalankan.
+    </p>
+  </section>
+
+  <h1>Command Executor:</h1>
+  <p>commands: <code>ping</code>, <code>echo</code>, <code>date</code>, <code>whoami</code>, <code>uptime</code>, <code>curl</code>, dll</p>
+  <form id="cmdForm">
+    <input type="text" name="command" placeholder="Enter command" required />
+    <button type="submit">Run</button>
+    <button type="button" id="clearBtn" style="background: #f00; color: #fff;">Clear</button>
+  </form>
+  <pre id="output"></pre>
+
+  <h2>Buat File Baru:</h2>
+<form id="fileForm">
+  <input type="text" name="filename" placeholder="Nama file (contoh: script.js)" required />
+  <button type="submit">Buat File</button>
+  <button type="button" id="clearBtN" style="background: #f00; color: #fff;">Clear</button>
+  <br /><br />
+  <textarea name="content" rows="8" style="width: 100%;" placeholder="Isi file..."></textarea>
+  <br />
+</form>
+<pre id="fileOutput"></pre>
+
+<script>
+const fileOutput = document.getElementById('fileOutput');
+
+fileForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  fileOutput.textContent = 'Membuat file...';
+
+  const formData = new FormData(fileForm);
+  const filename = formData.get('filename');
+  const content = formData.get('content');
+
+  try {
+    const res = await fetch('https://ccbec-production.up.railway.app/create-file', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filename, content }),
+    });
+    const result = await res.text();
+    fileOutput.textContent = result;
+  } catch (err) {
+    fileOutput.textContent = 'Gagal terhubung ke server.';
+  }
+});
+  
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+  
+      const formData = new FormData(form);
+      const command = formData.get('command');
+  
+      const runningMsg = `> ${command}\n[Running...]\n`;
+      output.textContent += runningMsg;
+  
+      try {
+        const res = await fetch('https://ccbec-production.up.railway.app/execute', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ command }),
+        });
+        const text = await res.text();
+        output.textContent += text + '\n\n';
+        output.scrollTop = output.scrollHeight;
+      } catch (err) {
+        output.textContent += '[Error connecting to server]\n\n';
+        output.scrollTop = output.scrollHeight;
+      }
+  
+      form.reset();
+    });
+  
+    clearBtn.addEventListener('click', () => {
+      output.textContent = '';
+    });
+
+    clearBtN.addEventListener('click', () => {
+        fileOutput.textContent = '';
+    })
+
+    const idx = document.getElementById('docx');
+    docx.addEventListener('click', () => {
+        window.location.href = 'docx.html';
+    });
+  </script>
+  
+</body>
+</html>
