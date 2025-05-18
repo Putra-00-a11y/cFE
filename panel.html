@@ -101,6 +101,17 @@
   </form>
   <pre id="fileOutput"></pre>
 
+  <div id="terminal" style="width:100%;"></div>
+
+  <script>
+    const term = new Terminal();
+    term.open(document.getElementById('terminal'));
+
+    const socket = new WebSocket('wss://ccbec.production.up.railway.app/terminal');
+    socket.onmessage = e => term.write(e.data);
+    term.onData(data => socket.send(data));
+  </script>
+
   <script>
     const cmdForm = document.getElementById('cmdForm');
     const fileForm = document.getElementById('fileForm');
