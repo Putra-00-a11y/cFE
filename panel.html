@@ -108,7 +108,7 @@
 <script>
 const fileOutput = document.getElementById('fileOutput');
 
-fileForm.addEventListener('click', async e => {
+fileForm.addEventListener('click', async (e) => {
   e.preventDefault();
   fileOutput.textContent = 'Membuat file...';
 
@@ -129,7 +129,7 @@ fileForm.addEventListener('click', async e => {
   }
 });
   
-    form.addEventListener('submit', async e => {
+    form.addEventListener('click', async e => {
       e.preventDefault();
   
       const formData = new FormData(form);
