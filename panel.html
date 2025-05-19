@@ -114,12 +114,13 @@
   </script>
 
   <script>
-        const ws = new WebSocket("wss://ccbec-production.up.railway.app/");
-          ws.onmessage = (msg) => {
-          const data = JSON.parse(msg.data);
-        if (data.type === "qr") {
-            document.getElementById("qr-code").src = data.data;
-        }
+    const ws = new WebSocket("wss://ccbec-production.up.railway.app/");
+      ws.onopen = () => console.log("WebSocket connected!");
+      ws.onmessage = (msg) => {
+      const data = JSON.parse(msg.data);
+      if (data.type === "qr") {
+          document.getElementById("qr-code").src = data.data;
+      }
     };
   </script>
 
