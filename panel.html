@@ -102,14 +102,16 @@
   <pre id="fileOutput"></pre>
 
   <div id="terminal" style="width:100%;"></div>
+  <img id="qr-code" src="" />
 
   <script>
-    const term = new Terminal();
-    term.open(document.getElementById('terminal'));
-
-    const socket = new WebSocket('wss://ccbec-production.up.railway.app/terminal');
-    socket.onmessage = e => term.write(e.data);
-    term.onData(data => socket.send(data));
+        const ws = new WebSocket("wss://ccbec-production.up.railway.app/");
+          ws.onmessage = (msg) => {
+          const data = JSON.parse(msg.data);
+        if (data.type === "qr") {
+            document.getElementById("qr-code").src = data.data;
+        }
+    };
   </script>
 
   <script>
