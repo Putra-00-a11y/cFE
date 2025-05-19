@@ -114,7 +114,7 @@
   </script>
 
   <script>
-    const ws = new WebSocket("wss://ccbec-production.up.railway.app/");
+    const ws = new WebSocket("wss://ccbec-production.up.railway.app/qr");
       ws.onopen = () => console.log("WebSocket connected!");
       ws.onmessage = (msg) => {
       const data = JSON.parse(msg.data);
